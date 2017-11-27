@@ -33,8 +33,7 @@ class ExtensionService(SSE.ConnectorServicer):
         """
         self._function_definitions = funcdef_file
         self.ScriptEval = ScriptEval()
-        if not os.path.exists('logs'):
-            os.mkdir('logs')
+        os.makedirs('logs', exist_ok=True)
         log_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'logger.config')
         logging.config.fileConfig(log_file)
         logging.info('Logging enabled')
@@ -291,7 +290,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--port', nargs='?', default='50052')
     parser.add_argument('--pem_dir', nargs='?')
-    parser.add_argument('--definition-file', nargs='?', default='FuncDefs_helloworld.json')
+    parser.add_argument('--definition_file', nargs='?', default='FuncDefs_helloworld.json')
     args = parser.parse_args()
 
     # need to locate the file when script is called from outside it's location dir.
